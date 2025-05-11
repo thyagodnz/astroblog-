@@ -1,4 +1,4 @@
-import News from '../models/newsController.js';
+import News from '../models/News.js';
 
 async function getNews(req, res) {
     try {

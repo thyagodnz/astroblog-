@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getUsers, createUser, deleteUser, updateUser } from './controllers/UserController.js';
-import { getNews, createNews, deleteNews, updatedNews } from '../controllers/NewsController.js';
+import { getNews, createNews, deleteNews, updatedNews } from './controllers/NewsController.js';
 const routes = Router();
 
 routes.get('/users', getUsers);
