@@ -1,8 +1,11 @@
 import './style.css'
 import Header from '../../components/Header/header.jsx'
 import Footer from '../../components/Footer/footer.jsx'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -15,7 +18,6 @@ function Home() {
       </div>
       <Footer />
     </>
-
   )
 }
 
