@@ -13,7 +13,7 @@ app.use(routes);
 
 connectDataBase()
     .then(() => {
-        app.listen(6000, () => {
+        app.listen(3000, () => {
             console.log('Servidor e banco de dados conectados');
         });
     })
