@@ -1,6 +1,6 @@
 import './header.css'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthProvider'
+import { useAuth } from '../../contexts/AuthContext'
 
 function Header() {
     const navigate = useNavigate()

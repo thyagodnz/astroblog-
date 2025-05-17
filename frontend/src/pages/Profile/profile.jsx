@@ -1,7 +1,7 @@
 import './profile.css'
 import Header from '../../components/Header/header.jsx'
 import Footer from '../../components/Footer/footer.jsx'
-import { useAuth } from '../../contexts/AuthProvider.jsx'
+import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
 
 function Profile() {

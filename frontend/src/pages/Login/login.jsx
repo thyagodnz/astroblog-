@@ -4,7 +4,7 @@ import Footer from '../../components/Footer/footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 import api from '../../services/api'
-import { useAuth } from '../../contexts/AuthProvider.jsx'
+import { useAuth } from '../../contexts/AuthContext.jsx'
 
 function Login() {
     const navigate = useNavigate()
