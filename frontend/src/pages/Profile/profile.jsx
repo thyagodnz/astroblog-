@@ -1,6 +1,6 @@
 import './profile.css'
-import Header from '../../components/Header/header.jsx'
-import Footer from '../../components/Footer/footer.jsx'
+import Header from '../../components/Header/Header.jsx'
+import Footer from '../../components/Footer/Footer.jsx'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
 

@@ -1,9 +1,9 @@
 import './login.css'
-import Header from '../../components/Header/header.jsx'
-import Footer from '../../components/Footer/footer.jsx'
+import Header from '../../components/Header/Header.jsx'
+import Footer from '../../components/Footer/Footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
-import api from '../../services/api'
+import api from '../../services/api.js'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 
 function Login() {
