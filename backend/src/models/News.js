@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const userSchema = mongoose.Schema({
+const newsSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -8,9 +8,8 @@ const userSchema = mongoose.Schema({
     content: {
         type: String,
         required: true,
-        
     },
-    image:{
+    image: {
         type: String,
         required: true
     },
@@ -18,6 +17,6 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     }
-});
+})
 
-export default mongoose.model('news', userSchema);
+export default mongoose.model('News', newsSchema)
