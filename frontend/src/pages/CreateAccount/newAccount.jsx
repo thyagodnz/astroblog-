@@ -4,23 +4,44 @@ import Footer from '../../components/Footer/footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 import api from '../../services/api.js'
+import { useAuth } from '../../contexts/AuthProvider.jsx'
 
 function NewAccount() {
 
     const navigate = useNavigate()
-
     const inputName = useRef()
     const inputEmail = useRef()
     const inputPassword = useRef()
+    const { login } = useAuth()
 
     async function creatUser() {
-        await api.post('/users', {
-            name: inputName.current.value,
-            email: inputEmail.current.value,
-            password: inputPassword.current.value
-        })
-        alert('Conta criada com sucesso!')
-        navigate('/')
+        const name = inputName.current.value
+        const email = inputEmail.current.value
+        const password = inputPassword.current.value
+
+        try {
+            await api.post('/users', { name, email, password })
+            alert('Conta criada com sucesso!')
+
+            const response = await api.post('/login', { email, password })
+
+            if (response.status === 200 && response.data) {
+                const userData = response.data
+                localStorage.setItem('user', JSON.stringify(userData))
+                login(userData)
+                navigate('/')
+            } else {
+                alert('Erro ao fazer login automático. Faça login manualmente.')
+                navigate('/login')
+            }
+        } catch (error) {
+            if (error.response?.data?.message) {
+                alert(error.response.data.message)
+            } else {
+                alert('Erro ao criar conta.')
+            }
+            console.error(error)
+        }
     }
 
     return (

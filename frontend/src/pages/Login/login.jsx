@@ -4,12 +4,14 @@ import Footer from '../../components/Footer/footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 import api from '../../services/api'
+import { useAuth } from '../../contexts/AuthProvider.jsx'
 
 function Login() {
     const navigate = useNavigate()
 
     const inputEmail = useRef()
     const inputPassword = useRef()
+    const { login } = useAuth()
 
     async function handleLogin() {
         try {
@@ -18,14 +20,16 @@ function Login() {
                 password: inputPassword.current.value
             })
 
-            if (response.status === 200) {
+            if (response.status === 200 && response.data) {
                 alert('Login realizado com sucesso!')
 
-                localStorage.setItem('user', JSON.stringify(response.data))
+                const userData = response.data
+                localStorage.setItem('user', JSON.stringify(userData))
+                login(userData)
                 navigate('/')
             }
         } catch (error) {
-            alert('E-mail ou senha inválidos')
+            alert('Erro ao tentar fazer login')
             console.error(error)
         }
     }
