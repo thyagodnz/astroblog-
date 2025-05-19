@@ -1,10 +1,10 @@
-import './profile.css'
+import './myProfile.css'
 import Header from '../../components/Header/Header.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
 
-function Profile() {
+function MyProfile() {
     const { user, logout } = useAuth()
     const navigate = useNavigate()
 
@@ -27,4 +27,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default MyProfile

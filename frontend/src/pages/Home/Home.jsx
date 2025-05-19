@@ -2,19 +2,43 @@ import './home.css'
 import Header from '../../components/Header/Header.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function Home() {
-
   const navigate = useNavigate()
+  const [newsList, setNewsList] = useState([])
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const response = await axios.get('http://localhost:3000/news')
+        setNewsList(response.data)
+      } catch (error) {
+        console.error('Erro ao buscar notícias:', error)
+      }
+    }
+
+    fetchNews()
+  }, [])
+
+  const goToNews = (id) => {
+    navigate(`/news/${id}`)
+  }
 
   return (
     <>
       <Header />
       <div className='page'>
-        <h1>Olá AstroBlog</h1>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure et dolorem laborum, perspiciatis magnam adipisci odio, cupiditate ad tenetur aut fugit consequuntur sit cumque harum? Possimus accusamus culpa earum eaque?</p>
-        <h1>Titulo2</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil quo veritatis laudantium harum facere necessitatibus dolorum voluptate dolor eligendi exercitationem iusto magnam dolores laboriosam, aperiam omnis laborum asperiores atque ullam.</p>
+        {newsList.map((news) => (
+          <div
+            key={news._id}
+            className="news-preview"
+            onClick={() => goToNews(news._id)}
+          >
+            <h2>{news.title}</h2>
+          </div>
+        ))}
       </div>
       <Footer />
     </>

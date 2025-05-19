@@ -14,7 +14,7 @@ function Header() {
             {location.pathname === '/' && (
                 <button
                     className='login-button'
-                    onClick={() => navigate(user ? '/profile' : '/login')}
+                    onClick={() => navigate(user ? '/my-profile' : '/login')}
                 >
                     {user ? 'Meu perfil' : 'Entrar'}
                 </button>

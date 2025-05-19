@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    collaborator: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now()
