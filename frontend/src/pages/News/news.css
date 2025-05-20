@@ -19,6 +19,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-.page .author {
-    font-size: 14px;
+.page .info {
+    font-size: 13px;
+    
+    & .author {
+        color: #460260;
+        font-weight: bold;
+    }
 }

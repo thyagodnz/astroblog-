@@ -32,12 +32,19 @@ function News() {
         )
     }
 
+    const data = new Date(news.createdAt)
+    const formattedDate = data.toLocaleDateString('pt-BR')
+    const formattedTime = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+
     return (
         <>
             <Header />
             <div className='page'>
                 <h1>{news.title}</h1>
-                <p className='author'>Por <strong>{news.author}</strong></p>
+                <p className='info'>
+                    Por <strong className='author'>{news.author}</strong> em {formattedDate} às {formattedTime}
+                </p>
+
                 {news.content.map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                 ))}
