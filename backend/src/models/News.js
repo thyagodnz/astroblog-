@@ -10,10 +10,11 @@ const userSchema = mongoose.Schema({
         required: true,
         
     },
-    image:{
-        type: String,
-        required: true
-    },
+    image:[{
+        url: {type: String,required: true},
+        description: {type: String}
+     
+}],
     createdAt: {
         type: Date,
         default: Date.now
