@@ -11,7 +11,7 @@ async function getNews(req, res) {
 
 async function createNews(req, res) {
     try {
-        const { title, content, image, author } = req.body
+        const { title, content, author, image, imageDescription } = req.body
 
         const contentArray = content
             .split(/\n\s*\n/)
@@ -21,8 +21,9 @@ async function createNews(req, res) {
         const newNews = await News.create({
             title,
             content: contentArray,
+            author,
             image,
-            author
+            imageDescription
         })
 
         return res.status(201).json(newNews)

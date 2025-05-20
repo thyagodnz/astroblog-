@@ -48,7 +48,10 @@ function News() {
                 {news.content.map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                 ))}
-                <img src={news.image} alt={news.title} />
+                <img src={news.image} alt={news.imageDescription} className="news-image" />
+                {news.imageDescription && (
+                    <p className="image-description">{news.imageDescription}</p>
+                )}
             </div>
             <Footer />
         </>
