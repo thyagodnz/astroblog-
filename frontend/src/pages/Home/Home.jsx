@@ -26,19 +26,31 @@ function Home() {
     navigate(`/news/${id}`)
   }
 
+  const firstNews = newsList[0]
+  const otherNews = newsList.slice(1)
+
   return (
     <>
       <Header />
       <div className='page'>
-        {newsList.map((news) => (
-          <div
-            key={news._id}
-            className="news-preview"
-            onClick={() => goToNews(news._id)}
-          >
-            <h2>{news.title}</h2>
+
+        {/* Notícia em destaque */}
+        {firstNews && (
+          <div className='featured-news' onClick={() => goToNews(firstNews._id)}>
+            <img src={firstNews.image} alt={firstNews.title} className='featured-image' />
+            <h2 className='featured-title'>{firstNews.title}</h2>
           </div>
-        ))}
+        )}
+
+        {/* Outras notícias */}
+        <div className='news-grid'>
+          {otherNews.map((news) => (
+            <div key={news._id} className='news-card' onClick={() => goToNews(news._id)}>
+              <img src={news.image} alt={news.title} className='news-card-image' />
+              <h3 className='news-card-title'>{news.title}</h3>
+            </div>
+          ))}
+        </div>
       </div>
       <Footer />
     </>

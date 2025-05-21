@@ -1,7 +1,16 @@
-.page h1 {
-    font-size: 32px;
+.news-title {
+    font-size: 30px;
     margin-bottom: 20px;
     color: #222;
+}
+
+.page .info {
+    font-size: 13px;
+
+    & .author {
+        color: #460260;
+        font-weight: bold;
+    }
 }
 
 .page p {
@@ -11,7 +20,7 @@
     color: #444;
 }
 
-.page img {
+.news-image {
     margin-top: 20px;
     border-radius: 10px;
     max-width: 600px;
@@ -23,20 +32,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-.image-description {
-  text-align: center;
-  font-size: 13px !important;
-  color: #555;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  font-style: italic;
-}
-
-.page .info {
-    font-size: 13px;
-    
-    & .author {
-        color: #460260;
-        font-weight: bold;
-    }
+.news-image-description {
+    text-align: center;
+    font-size: 13px !important;
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-style: italic;
 }

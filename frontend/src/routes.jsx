@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import ScrollManager from './components/ScrollManager/ScrollManager.jsx'
 import Home from './pages/Home/Home.jsx'
 import Login from './pages/Login/Login.jsx'
 import NewAccount from './pages/NewAccount/NewAccount.jsx'
@@ -9,6 +10,7 @@ import News from './pages/News/News.jsx'
 function App() {
   return (
     <Router>
+      <ScrollManager />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

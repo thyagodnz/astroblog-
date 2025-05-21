@@ -25,11 +25,7 @@ function News() {
     }, [id])
 
     if (!news) {
-        return (
-            <>
-                <Loading />
-            </>
-        )
+        return <Loading />
     }
 
     const data = new Date(news.createdAt)
@@ -40,7 +36,7 @@ function News() {
         <>
             <Header />
             <div className='page'>
-                <h1>{news.title}</h1>
+                <h1 className='news-title'>{news.title}</h1>
                 <p className='info'>
                     Por <strong className='author'>{news.author}</strong> em {formattedDate} às {formattedTime}
                 </p>
@@ -48,9 +44,15 @@ function News() {
                 {news.content.map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                 ))}
-                <img src={news.image} alt={news.imageDescription || news.title} className="news-image" />
+
+                <img
+                    src={news.image}
+                    alt={news.imageDescription || news.title}
+                    className="news-image"
+                />
+
                 {news.imageDescription && (
-                    <p className="image-description">{news.imageDescription}</p>
+                    <p className="news-image-description">{news.imageDescription}</p>
                 )}
             </div>
             <Footer />
