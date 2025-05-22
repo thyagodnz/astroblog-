@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import Login from './pages/Login/login'
 import NewAccount from './pages/CreateAccount/newAccount'
 import ForgotPassword from './pages/ForgotPassword/forgotPassword'
-import AstroBlog from './pages/AstroBlog/AstroBlog';
+import AstroBlog from './pages/Login/AstroBlog/AstroBlog.jsx';
 
 function App() {
   return (

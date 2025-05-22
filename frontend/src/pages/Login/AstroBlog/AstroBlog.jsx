@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './AstroBlog.css';
+import Header from '../../../components/Header/header';
+import Footer from '../../../components/Footer/footer';
 
 const AstroBlog = () => {
   const [activeTab, setActiveTab] = useState('manual');
@@ -14,10 +16,10 @@ const AstroBlog = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="container astroblog-container">
-      <header className="astroblog-header">
-        <h1>ASTROBLOG</h1>
-      </header>
+      
       
       <div className="post-actions">
         <div className="action-tabs">
@@ -78,6 +80,8 @@ const AstroBlog = () => {
         )}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
