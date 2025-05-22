@@ -5,13 +5,13 @@ const newsSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    content: {
-        type: [String],
-        required: true,
-    },
     author: {
         type: String,
         required: true
+    },
+    content: {
+        type: [String],
+        required: true,
     },
     image: {
         type: String,
