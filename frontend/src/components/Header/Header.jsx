@@ -11,7 +11,7 @@ function Header() {
         <header className='header'>
             <h1 onClick={() => navigate('/')}>ASTROBLOG</h1>
 
-            {location.pathname === '/' && (
+            {(location.pathname === '/' || location.pathname.startsWith('/news/')) && (
                 <button
                     className='login-button'
                     onClick={() => navigate(user ? '/my-profile' : '/login')}
