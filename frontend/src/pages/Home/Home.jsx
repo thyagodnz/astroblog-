@@ -1,11 +1,10 @@
 import './home.css'
-import Header from '../../components/Header/Header.jsx'
-import Footer from '../../components/Footer/Footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function Home() {
+
   const navigate = useNavigate()
   const [newsList, setNewsList] = useState([])
 
@@ -30,30 +29,26 @@ function Home() {
   const otherNews = newsList.slice(1)
 
   return (
-    <>
-      <Header />
-      <div className='page'>
+    <div className='page'>
 
-        {/* Notícia em destaque */}
-        {firstNews && (
-          <div className='featured-news' onClick={() => goToNews(firstNews._id)}>
-            <img src={firstNews.image} alt={firstNews.title} className='featured-image' />
-            <h2 className='featured-title'>{firstNews.title}</h2>
-          </div>
-        )}
-
-        {/* Outras notícias */}
-        <div className='news-grid'>
-          {otherNews.map((news) => (
-            <div key={news._id} className='news-card' onClick={() => goToNews(news._id)}>
-              <img src={news.image} alt={news.title} className='news-card-image' />
-              <h3 className='news-card-title'>{news.title}</h3>
-            </div>
-          ))}
+      {/* Notícia em destaque */}
+      {firstNews && (
+        <div className='featured-news' onClick={() => goToNews(firstNews._id)}>
+          <img src={firstNews.image} alt={firstNews.title} className='featured-image' />
+          <h2 className='featured-title'>{firstNews.title}</h2>
         </div>
+      )}
+
+      {/* Outras notícias */}
+      <div className='news-grid'>
+        {otherNews.map((news) => (
+          <div key={news._id} className='news-card' onClick={() => goToNews(news._id)}>
+            <img src={news.image} alt={news.title} className='news-card-image' />
+            <h3 className='news-card-title'>{news.title}</h3>
+          </div>
+        ))}
       </div>
-      <Footer />
-    </>
+    </div>
   )
 }
 
