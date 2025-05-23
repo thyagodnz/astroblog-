@@ -44,15 +44,34 @@ function NewAccount() {
 
     return (
         <div className='container'>
-            <form className='new-account'>
-                <h1>Criar nova conta</h1>
-                <input placeholder='Nome' name='nome' type='name' ref={inputName} />
-                <input placeholder='E-mail' name='email' type='email' ref={inputEmail} />
-                <input placeholder='Senha' name='senha' type='password' ref={inputPassword} />
-                <button type='button' onClick={creatUser}>Criar</button>
-                <h2 onClick={() => navigate('/login')} style={{ cursor: 'pointer' }}>
+            <form className='container-form'>
+                <h1 className='container-title'>Criar nova conta</h1>
+                <input
+                    className='container-input'
+                    placeholder='Nome'
+                    name='nome' type='name'
+                    ref={inputName} />
+                <input
+                    className='container-input'
+                    placeholder='E-mail'
+                    name='email'
+                    type='email'
+                    ref={inputEmail} />
+                <input
+                    className='container-input'
+                    placeholder='Senha'
+                    name='senha'
+                    type='password'
+                    ref={inputPassword} />
+                <button
+                    className='container-button'
+                    type='button'
+                    onClick={creatUser}>
+                    Criar
+                </button>
+                <span className='container-link' onClick={() => navigate('/login')} >
                     Voltar para tela de Login
-                </h2>
+                </span>
             </form>
         </div>
     )

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loading from '../../components/Loading/Loading.jsx'
+import { format, parseISO } from 'date-fns'
 
 function News() {
 
@@ -26,9 +27,9 @@ function News() {
         return <Loading />
     }
 
-    const data = new Date(news.createdAt)
-    const formattedDate = data.toLocaleDateString('pt-BR')
-    const formattedTime = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+    const date = parseISO(news.createdAt)
+    const formattedDate = format(date, 'dd/MM/yyyy')
+    const formattedTime = format(date, 'HH:mm')
 
     return (
         <div className='page'>

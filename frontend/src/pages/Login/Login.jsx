@@ -5,7 +5,7 @@ import api from '../../services/api.js'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 
 function Login() {
-    
+
     const navigate = useNavigate()
     const inputEmail = useRef()
     const inputPassword = useRef()
@@ -34,17 +34,33 @@ function Login() {
 
     return (
         <div className='container'>
-            <form className='login'>
-                <h1>Fazer login</h1>
-                <input placeholder='E-mail' name='email' type='email' ref={inputEmail} />
-                <input placeholder='Senha' name='senha' type='password' ref={inputPassword} />
-                <button type='button' onClick={handleLogin}>Login</button>
-                <h2 onClick={() => navigate('/forgot-password')}>
+            <form className='container-form'>
+                <h1 className='container-title'>Fazer login</h1>
+                <input
+                    className='container-input'
+                    placeholder='E-mail'
+                    name='email'
+                    type='email'
+                    ref={inputEmail}
+                />
+                <input
+                    className='container-input'
+                    placeholder='Senha'
+                    name='senha'
+                    type='password'
+                    ref={inputPassword} />
+                <button
+                    className='container-button'
+                    type='button'
+                    onClick={handleLogin}>
+                    Login
+                </button>
+                <span className='container-link' onClick={() => navigate('/forgot-password')}>
                     Esqueceu a senha?
-                </h2>
-                <h2 onClick={() => navigate('/new-account')}>
+                </span>
+                <span className='container-link' onClick={() => navigate('/new-account')}>
                     Criar conta
-                </h2>
+                </span>
             </form>
         </div>
     )
