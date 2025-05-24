@@ -45,8 +45,6 @@
     margin-right: auto;
 }
 
-
-
 .comments-section {
     padding-top: 20px;
     border-top: 1px solid #ddd;
@@ -60,6 +58,7 @@
 }
 
 .comment {
+    position: relative;
     background-color: #f9f9f9;
     border-radius: 8px;
     padding: 12px 16px;
@@ -98,38 +97,46 @@
     margin-bottom: 10px;
 }
 
+
+
 .comment-form {
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+}
+
+.textarea-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .comment-form textarea {
-    resize: vertical;
-    min-height: 50px;
+    width: 100%;
+    min-height: 70px;
     border-radius: 8px;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 10px 50px 10px 10px;
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s ease;
+    resize: none;
+    box-sizing: border-box;
 }
 
 .comment-form button {
-    align-self: flex-end;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     background-color: #460260;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 5px 12px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 14px;
-    margin-bottom: 10px;
 }
 
 .comment-form button:hover {
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .login-to-comment {
@@ -140,4 +147,22 @@
 
 .comment-input {
     min-width: 100%;
+}
+
+.delete-comment-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: transparent;
+    color: red;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.delete-comment-button:hover {
+    text-decoration: underline;
 }

@@ -60,6 +60,19 @@ function News() {
         }
     }
 
+    async function handleDeleteComment(commentId) {
+        try {
+            await axios.delete(`http://localhost:3000/news/${id}/comments/${commentId}`, {
+                data: { userId: user.id }
+            })
+
+            const response = await axios.get(`http://localhost:3000/news/${id}`)
+            setNews(response.data)
+        } catch (error) {
+            console.error('Erro ao deletar comentário:', error)
+        }
+    }
+
     return (
         <div className='page'>
             <h1 className='news-title'>{news.title}</h1>
@@ -87,17 +100,19 @@ function News() {
 
                 {user ? (
                     <form onSubmit={handleCommentSubmit} className="comment-form">
-                        <textarea
-                            className="comment-input"
-                            placeholder="Adicione um comentário..."
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            rows="3"
-                            required
-                        />
-                        <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Enviando...' : 'Comentar'}
-                        </button>
+                        <div className="textarea-wrapper">
+                            <textarea
+                                className="comment-input"
+                                placeholder="Adicione um comentário..."
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                rows="3"
+                                required
+                            />
+                            <button type="submit" className="comment-submit-button" disabled={isSubmitting}>
+                                {isSubmitting ? '...' : '➤'}
+                            </button>
+                        </div>
                     </form>
                 ) : (
                     <p className="login-to-comment">Faça login para comentar.</p>
@@ -116,6 +131,15 @@ function News() {
                                 </span>
                             </p>
                             <p className="comment-content">{c.content}</p>
+
+                            {user && c.user?._id === user.id && (
+                                <button
+                                    className="delete-comment-button"
+                                    onClick={() => handleDeleteComment(c._id)}
+                                >
+                                    Excluir
+                                </button>
+                            )}
                         </div>
                     ))
                 ) : (
