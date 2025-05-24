@@ -1,16 +1,16 @@
 import './news.css'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loading from '../../components/Loading/Loading.jsx'
 import { useAuth } from '../../contexts/AuthContext.jsx'
-import { formatDistanceToNow } from 'date-fns'
-import { format, parseISO } from 'date-fns'
+import { formatDistanceToNow, format, parseISO } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 
 function News() {
 
     const { id } = useParams()
+    const navigate = useNavigate()
     const [news, setNews] = useState(null)
     const [comment, setComment] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -39,7 +39,14 @@ function News() {
 
     async function handleCommentSubmit(e) {
         e.preventDefault()
+
         if (!comment.trim()) return
+
+        if (!user) {
+            alert('Faça login para adicionar um comentário.')
+            navigate('/login')
+            return
+        }
 
         try {
             setIsSubmitting(true)
@@ -98,25 +105,21 @@ function News() {
             <div className="comments-section">
                 <h3>Comentários</h3>
 
-                {user ? (
-                    <form onSubmit={handleCommentSubmit} className="comment-form">
-                        <div className="textarea-wrapper">
-                            <textarea
-                                className="comment-input"
-                                placeholder="Adicione um comentário..."
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                rows="3"
-                                required
-                            />
-                            <button type="submit" className="comment-submit-button" disabled={isSubmitting}>
-                                {isSubmitting ? '...' : '➤'}
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <p className="login-to-comment">Faça login para comentar.</p>
-                )}
+                <form onSubmit={handleCommentSubmit} className="comment-form">
+                    <div className="textarea-wrapper">
+                        <textarea
+                            className="comment-input"
+                            placeholder="Adicione um comentário..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            rows="3"
+                            required
+                        />
+                        <button type="submit" className="comment-submit-button" disabled={isSubmitting}>
+                            {isSubmitting ? '...' : '➤'}
+                        </button>
+                    </div>
+                </form>
 
                 {news.comments && news.comments.length > 0 ? (
                     news.comments.map((c) => (
