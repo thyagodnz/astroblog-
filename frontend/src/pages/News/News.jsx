@@ -8,7 +8,7 @@ import { formatDistanceToNow, format, parseISO } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 
 function News() {
-
+    
     const { id } = useParams()
     const navigate = useNavigate()
     const [news, setNews] = useState(null)
@@ -68,6 +68,12 @@ function News() {
     }
 
     async function handleDeleteComment(commentId) {
+        const confirmDelete = window.confirm('Deseja excluir este comentário?')
+
+        if (!confirmDelete) {
+            return
+        }
+
         try {
             await axios.delete(`http://localhost:3000/news/${id}/comments/${commentId}`, {
                 data: { userId: user.id }
