@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getUsers, createUser, deleteUser, updateUser, loginUser } from './controllers/UserController.js'
-import { getNews, createNews, deleteNews, updatedNews, getNewsById } from './controllers/NewsController.js'
+import { getNews, createNews, deleteNews, updateNews, getNewsById, addComment, deleteComment } from './controllers/NewsController.js'
 
 const routes = Router()
 
@@ -13,7 +13,9 @@ routes.post('/login', loginUser)
 routes.get('/news', getNews)
 routes.post('/news', createNews)
 routes.delete('/news/:id', deleteNews)
-routes.put('/news/:id', updatedNews)
+routes.put('/news/:id', updateNews)
 routes.get('/news/:id', getNewsById)
+routes.post('/news/:id/comments', addComment)
+routes.delete('/news/:newsId/comments/:commentId', deleteComment)
 
 export default routes

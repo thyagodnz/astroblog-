@@ -1,14 +1,20 @@
 import './news.css'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loading from '../../components/Loading/Loading.jsx'
-import { format, parseISO } from 'date-fns'
+import { useAuth } from '../../contexts/AuthContext.jsx'
+import { formatDistanceToNow, format, parseISO } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
 function News() {
-
+    
     const { id } = useParams()
+    const navigate = useNavigate()
     const [news, setNews] = useState(null)
+    const [comment, setComment] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const { user } = useAuth()
 
     useEffect(() => {
         async function fetchNews() {
@@ -31,6 +37,55 @@ function News() {
     const formattedDate = format(date, 'dd/MM/yyyy')
     const formattedTime = format(date, 'HH:mm')
 
+    async function handleCommentSubmit(e) {
+        e.preventDefault()
+
+        if (!comment.trim()) return
+
+        if (!user) {
+            alert('Faça login para adicionar um comentário.')
+            navigate('/login')
+            return
+        }
+
+        try {
+            setIsSubmitting(true)
+
+            await axios.post(`http://localhost:3000/news/${id}/comments`, {
+                user: user.id,
+                content: comment.trim()
+            })
+
+            const response = await axios.get(`http://localhost:3000/news/${id}`)
+            setNews(response.data)
+
+            setComment('')
+        } catch (error) {
+            console.error('Erro ao enviar comentário:', error)
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    async function handleDeleteComment(commentId) {
+        const confirmDelete = window.confirm('Deseja excluir este comentário?')
+
+        if (!confirmDelete) {
+            return
+        }
+
+        try {
+            await axios.delete(`http://localhost:3000/news/${id}/comments/${commentId}`, {
+                data: { userId: user.id }
+            })
+
+            const response = await axios.get(`http://localhost:3000/news/${id}`)
+            setNews(response.data)
+        } catch (error) {
+            console.error('Erro ao deletar comentário:', error)
+        }
+    }
+
     return (
         <div className='page'>
             <h1 className='news-title'>{news.title}</h1>
@@ -51,6 +106,55 @@ function News() {
             {news.imageDescription && (
                 <p className="news-image-description">{news.imageDescription}</p>
             )}
+
+            {/* Seção de Comentários */}
+            <div className="comments-section">
+                <h3>Comentários</h3>
+
+                <form onSubmit={handleCommentSubmit} className="comment-form">
+                    <div className="textarea-wrapper">
+                        <textarea
+                            className="comment-input"
+                            placeholder="Adicione um comentário..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            rows="3"
+                            required
+                        />
+                        <button type="submit" className="comment-submit-button" disabled={isSubmitting}>
+                            {isSubmitting ? '...' : '➤'}
+                        </button>
+                    </div>
+                </form>
+
+                {news.comments && news.comments.length > 0 ? (
+                    news.comments.map((c) => (
+                        <div key={c._id} className="comment">
+                            <p className="comment-header">
+                                <span className="comment-user">{c.user?.name || 'Usuário desconhecido'}</span>
+                                <span className="comment-date">
+                                    • {formatDistanceToNow(new Date(c.createdAt), {
+                                        addSuffix: true,
+                                        locale: ptBR
+                                    })}
+                                </span>
+                            </p>
+                            <p className="comment-content">{c.content}</p>
+
+                            {user && c.user?._id === user.id && (
+                                <button
+                                    className="delete-comment-button"
+                                    onClick={() => handleDeleteComment(c._id)}
+                                >
+                                    Excluir
+                                </button>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p className="no-comments">Nenhum comentário ainda.</p>
+                )}
+            </div>
         </div>
     )
 }

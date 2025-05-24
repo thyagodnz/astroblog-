@@ -1,5 +1,21 @@
 import mongoose from 'mongoose'
 
+const commentSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 const newsSchema = mongoose.Schema({
     title: {
         type: String,
@@ -24,7 +40,8 @@ const newsSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [commentSchema]
 })
 
 export default mongoose.model('News', newsSchema)
