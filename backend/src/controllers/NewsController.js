@@ -68,14 +68,43 @@ async function updatedNews(req, res) {
 async function getNewsById(req, res) {
     const id = req.params.id
     try {
-        const news = await News.findById(id)
+        const news = await News.findById(id).populate('comments.user', 'name _id')
+
         if (!news) {
             return res.status(404).json({ res: 'Notícia não encontrada' })
         }
+
+        news.comments.sort((a, b) => b.createdAt - a.createdAt)
+
         return res.status(200).json(news)
     } catch (error) {
         return res.status(500).json({ res: 'Erro ao buscar notícia', error: error.message })
     }
 }
 
-export { getNews, createNews, deleteNews, updatedNews, getNewsById }
+async function addComment(req, res) {
+    const { user, content } = req.body
+    const { id } = req.params
+
+    if (!user || !content) {
+        return res.status(400).json({ error: 'Campos obrigatórios' })
+    }
+
+    try {
+        const news = await News.findById(id)
+        if (!news) {
+            return res.status(404).json({ error: 'Notícia não encontrada' })
+        }
+
+        news.comments.push({ user, content })
+        await news.save()
+
+        const updatedNews = await News.findById(id).populate('comments.user', 'name _id')
+
+        res.status(201).json(updatedNews.comments)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao adicionar comentário' })
+    }
+}
+
+export { getNews, createNews, deleteNews, updatedNews, getNewsById, addComment }
