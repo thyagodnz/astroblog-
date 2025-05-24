@@ -48,7 +48,7 @@ async function deleteNews(req, res) {
     }
 }
 
-async function updatedNews(req, res) {
+async function updateNews(req, res) {
     const id = req.params.id
     const updatedData = req.body
 
@@ -99,12 +99,48 @@ async function addComment(req, res) {
         news.comments.push({ user, content })
         await news.save()
 
-        const updatedNews = await News.findById(id).populate('comments.user', 'name _id')
+        const updateNews = await News.findById(id).populate('comments.user', 'name _id')
 
-        res.status(201).json(updatedNews.comments)
+        res.status(201).json(updateNews.comments)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao adicionar comentário' })
     }
 }
 
-export { getNews, createNews, deleteNews, updatedNews, getNewsById, addComment }
+async function deleteComment(req, res) {
+    const { newsId, commentId } = req.params
+    const { userId } = req.body
+
+    if (!userId) {
+        return res.status(400).json({ error: 'O ID do usuário é obrigatório.' })
+    }
+
+    try {
+        const news = await News.findById(newsId)
+        if (!news) {
+            return res.status(404).json({ error: 'Notícia não encontrada' })
+        }
+
+        const comment = news.comments.id(commentId)
+        if (!comment) {
+            return res.status(404).json({ error: 'Comentário não encontrado' })
+        }
+
+        if (comment.user.toString() !== userId) {
+            return res.status(403).json({ error: 'Você não tem permissão para deletar este comentário' })
+        }
+
+        news.comments.pull(commentId)
+        await news.save()
+
+        const updatedNews = await News.findById(newsId).populate('comments.user', 'name _id')
+        updatedNews.comments.sort((a, b) => b.createdAt - a.createdAt)
+
+        res.status(200).json(updatedNews.comments)
+
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao deletar comentário', details: error.message })
+    }
+}
+
+export { getNews, createNews, deleteNews, updateNews, getNewsById, addComment, deleteComment }
